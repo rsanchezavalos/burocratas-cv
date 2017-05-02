@@ -84,7 +84,7 @@ def clean_name(text):
         print("Niidea")
     return text
 
-
+#@click.option('--funcionarios_list')
 def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):    
     initial_url ="http://servidorespublicos.gob.mx"
     now = datetime.datetime.now()
@@ -148,19 +148,21 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
             results = driver.find_element_by_id('form:tblResultadoConsulta_data').find_elements_by_xpath("//tbody/tr/td")
 
             if results[0].text == 'Sin Datos':
+
                 file = 'funcionarios_sin_declaracion_' + str(now.year) + '.txt'
                 target_file = bucket + file
+
                 with open(file, 'wb') as data:
                     s3c.download_fileobj(raw_bucket, target_file, data)                
+
+
                 with open(file) as result:
                         uniqlines = list(result.readlines())
                         uniqlines.append(funcionario)
+                        uniqlines = set(uniqlines)
+
                         with open(file, 'w') as temp:
-                            temp.writelines(set(uniqlines))
-                with open(file, 'rb') as data:
-                    s3c.upload_fileobj(data, raw_bucket,target_file)
-
-
+                            temp.write('\n'.join(str(line) for line in uniqlines))
             else:
                 n_results = int(len(results)/2)
                 print(n_results)
@@ -255,9 +257,10 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
             with open(file) as result:
                     uniqlines = list(result.readlines())
                     uniqlines.append(funcionario)
+                    uniqlines = set(uniqlines)
 
                     with open(file, 'w') as temp:
-                        temp.writelines(set(uniqlines))
+                        temp.write('\n'.join(str(line) for line in uniqlines))
 
             with open(file, 'rb') as data:
                 s3c.upload_fileobj(data, raw_bucket,target_file)
