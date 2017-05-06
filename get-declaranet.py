@@ -1,33 +1,33 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
+
 """Declaranet.py.
-ToDo(refactoring, código Terrible)
+    ToDo(refactoring, código Terrible)
 
-Este módulo crawlea de la página de declaranet.gob.mx los currículums históricos de 
-los funcionarios pasados por el argumento. El código asume que el archivo se encuentra
-en la carpeta ./data/servidores_crawl/
+    Este módulo crawlea de la página de declaranet.gob.mx los currículums históricos de 
+    los funcionarios pasados por el argumento. El código asume que el archivo se encuentra
+    en la carpeta ./data/servidores_crawl/
 
-Dependencias:
-    Pipeline de Funcionarios.
+    Dependencias:
+        Pipeline de Funcionarios.
 
-Ejemplo:
-        $ ipython ./pipelines/Ingest/declaranet.py  "Funcionario 1, Funcionario 2, ..." 
+    Ejemplo:
+            $ ipython ./pipelines/Ingest/declaranet.py  "Funcionario 1, Funcionario 2, ..." 
 
-Atributos:
-    Nombre-documento (str): Nombre del documento que tiene a los funcionarios por buscar.
+    Atributos:
+        Nombre-documento (str): Nombre del documento que tiene a los funcionarios por buscar.
 
-    E.g.
-        Isaac Cinta Sánchez,  Hector Merlin Marcial,  Lorenzo Gomez Vega,  Jaqueline Ramirez Galvan,  
-        Arturo Daniel Almada Iberri,  Mario Zamora Gastelum,  Monica Romero Hernandez,  
-        Luis Alberto Rodriguez Reyes,  Alfredo Torres Martinez,  Jose Luis  Velasquez  Salas ,  
-        Miguel Angel  Gomez  Castillo ,  Mariana Lopez Suck,  Emilio Fueyo Saldaña
+        E.g.
+            Isaac Cinta Sánchez,  Hector Merlin Marcial,  Lorenzo Gomez Vega,  Jaqueline Ramirez Galvan,  
+            Arturo Daniel Almada Iberri,  Mario Zamora Gastelum,  Monica Romero Hernandez,  
+            Luis Alberto Rodriguez Reyes,  Alfredo Torres Martinez,  Jose Luis  Velasquez  Salas ,  
+            Miguel Angel  Gomez  Castillo ,  Mariana Lopez Suck,  Emilio Fueyo Saldaña
 
-    Puedes descargar los nombres y acomodarlos para esta función de esta forma:
-        "SELECT  nombre || primer_apellido || segundo_apellido  FROM raw.funcionarios \
-        WHERE institucion LIKE '% SECRETARÍA DE COMUNICACIONES Y TRANSPORTES%';" | \
-        uniq | awk 1 ORS=',' |  sed -e "s/[,| *,*]$//g;s/^//g;s/,$//g;" > \
-        ./data/servidores_crawl/temp.txt
-
+        Puedes descargar los nombres y acomodarlos para esta función de esta forma:
+            "SELECT  nombre || primer_apellido || segundo_apellido  FROM raw.funcionarios \
+            WHERE institucion LIKE '% SECRETARÍA DE COMUNICACIONES Y TRANSPORTES%';" | \
+            uniq | awk 1 ORS=',' |  sed -e "s/[,| *,*]$//g;s/^//g;s/,$//g;" > \
+            ./data/servidores_crawl/temp.txt
 """
 
 import argparse
@@ -118,17 +118,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
         else:
             break
 
-    n = 0
     for funcionario in funcionarios_list:
-        n += 1
-        if n==5:
-            # Las cookies funcionan para pocos funcionarios, si se pasa más
-            # tiene que volver a instanciar el driver 
-            funcionarios_list = funcionarios_list[5:]
-            display.stop()
-            Declaranet(funcionarios_list,path)
-        else:
-            pass
 
         try:
             print('intentando funcionario: ' + str(funcionario))
