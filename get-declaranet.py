@@ -87,6 +87,11 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
     initial_url ="http://servidorespublicos.gob.mx"
     now = datetime.datetime.now()
 
+    try:
+        driver.stop()
+    except:
+        pass
+
     # Instancia el Driver
     display = xvfbwrapper.Xvfb()
     display.start()
@@ -183,7 +188,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                         try:
                             signal.alarm(70)  
                             driver.find_element_by_id('form:tblResultado:{0}:idButtonConsultaAcuse'.format(cv)).click()
-                            driver.implicitly_wait(160)
+                            driver.implicitly_wait(200)
 
                             cookies = {
                                 'JSESSIONID': driver.get_cookies()[1]["value"],
@@ -206,7 +211,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             print(cve)
                             target_file = bucket +str(now.year)+ "/"+ cve + ".pdf"
                             target_file = target_file
-                            time.sleep(0.20)
+                            time.sleep(100)
                             fake_handle = StringIO(requests.get('http://servidorespublicos.gob.mx/consulta.pdf', headers=headers, cookies=cookies).content)
                             s3c.put_object(Bucket=raw_bucket, Key=target_file, Body=fake_handle.read())
 
