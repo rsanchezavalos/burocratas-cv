@@ -4,12 +4,10 @@
 """Declaranet.py.
     ToDo(refactoring, código Terrible)
 
-    Este módulo crawlea de la página de declaranet.gob.mx los currículums históricos de 
-    los funcionarios pasados por el argumento. El código asume que el archivo se encuentra
-    en la carpeta ./data/servidores_crawl/
+    Esta función crawlea de la página de declaranet.gob.mx los currículums históricos de los 
+    funcionarios. Este código debe ser usado en el producto de datos #Compranet.
 
-    Dependencias:
-        Pipeline de Funcionarios.
+    El código asume que el archivo se encuentra en la carpeta ./data/servidores_crawl/
 
     Ejemplo:
             $ ipython ./pipelines/Ingest/declaranet.py  "Funcionario 1, Funcionario 2, ..." 
