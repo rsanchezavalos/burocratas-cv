@@ -89,6 +89,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
 
     try:
         driver.stop()
+
     except:
         pass
 
@@ -126,12 +127,10 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
         try:
             print('intentando funcionario: ' + str(funcionario))
             # you'll have a list of names from the other table
-            time.sleep(1)
             name = driver.find_element_by_id('form:nombresConsulta')        
             time.sleep(1)
             name.clear()
             name.send_keys(funcionario)
-            time.sleep(3)
             #btn = driver.find_element_by_name('form:buscarCosnsulta')
             btn = driver.find_element_by_name('form:buscarCosnsulta')
             btn.click()
@@ -163,7 +162,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                 for result in range(n_results):
                     #result +=1 
                     print("iteration number" + str(result))
-                    time.sleep(100)
+                    time.sleep(randint(100,200))
                     #driver.implicitly_wait(160)
 
                     try: 
@@ -214,10 +213,10 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             time.sleep(.05)
                             fake_handle = StringIO(requests.get('http://servidorespublicos.gob.mx/consulta.pdf', headers=headers, cookies=cookies).content)
                             print(target_file)
-                            time.sleep(.05)
+                            time.sleep(randint(0,20))
                             s3c.put_object(Bucket=raw_bucket, Key=target_file, Body=fake_handle.read())
 
-                            time.sleep(5)
+                            time.sleep(randint(10,30))
                             escape = driver.find_element_by_id("form:buscar")
                             escape.send_keys(Keys.ESCAPE)
                             signal.alarm(0)
