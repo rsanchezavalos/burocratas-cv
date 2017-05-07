@@ -187,7 +187,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                         signal.signal(signal.SIGALRM, timeout_handler)
 
                         try:
-                            signal.alarm(70)  
+                            signal.alarm(1200)  
                             driver.find_element_by_id('form:tblResultado:{0}:idButtonConsultaAcuse'.format(cv)).click()
                             driver.implicitly_wait(200)
 
