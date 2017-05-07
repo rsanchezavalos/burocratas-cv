@@ -200,7 +200,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                                 'Content-Type': 'charset=utf-8'
                             }
 
-                            sleep(randint(0,100)/100)
+                            sleep(randint(200,800)/100)
                             print("intentando decodificar")
                             cve = clean_name(cve)
                             print(cve)
