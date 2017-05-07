@@ -163,7 +163,8 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                 for result in range(n_results):
                     #result +=1 
                     print("iteration number" + str(result))
-                    driver.implicitly_wait(160)
+                    time.sleep(200)
+                    #driver.implicitly_wait(160)
 
                     try: 
                         driver.find_element_by_id('form:tblResultadoConsulta:{0}:idLinkBack'.format(result)).click()
