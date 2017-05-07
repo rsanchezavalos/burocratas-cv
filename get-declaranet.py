@@ -223,16 +223,16 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             pass
 
 
-                    driver.find_element_by_id("form:buscar").click()
-                    
-                    while not link:
-                        try:
-                            driver.find_element_by_id("form:buscar").click()
-                        except NoSuchElementException:
-                            print("looking for 'form:buscar'")
-                            time.sleep(2)
-                        else:
-                            break
+    driver.stop()
+                    #driver.find_element_by_id("form:buscar").click()
+                    #while not link:
+                    #    try:
+                    #        driver.find_element_by_id("form:buscar").click()
+                    #    except NoSuchElementException:
+                    #        print("looking for 'form:buscar'")
+                    #        time.sleep(2)
+                    #    else:
+                    #        break
 
         except:
             file = 'funcionarios_sin_declaracion_' + str(now.year) + '.txt'
