@@ -208,7 +208,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             time.sleep(randint(10,800)/100)
                             print("intentando decodificar")
                             cve = clean_name(cve)
-                            target_file = bucket + '2017a' + "/"+ cve + ".pdf"
+                            target_file = bucket + '2017' + "/"+ cve + ".pdf"
                             target_file = target_file
                             time.sleep(.05)
                             fake_handle = StringIO(requests.get('http://servidorespublicos.gob.mx/consulta.pdf', headers=headers, cookies=cookies).content)
