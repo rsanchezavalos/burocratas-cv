@@ -108,7 +108,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
     #driver = webdriver.Chrome(chrome_options=chromeOptions)
     driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver",chrome_options=chromeOptions)
     #driver = webdriver.Chrome()
-    driver.implicitly_wait(100)
+    driver.implicitly_wait(50)
     driver.get(initial_url) 
 
     link = None
@@ -209,11 +209,11 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             sleep(randint(200,800)/100)
                             print("intentando decodificar")
                             cve = clean_name(cve)
-                            print(cve)
                             target_file = bucket + '2017a' + "/"+ cve + ".pdf"
                             target_file = target_file
                             time.sleep(200)
                             fake_handle = StringIO(requests.get('http://servidorespublicos.gob.mx/consulta.pdf', headers=headers, cookies=cookies).content)
+                            print(target_file)
                             time.sleep(10)
                             s3c.put_object(Bucket=raw_bucket, Key=target_file, Body=fake_handle.read())
 
