@@ -231,7 +231,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                             pass
 
 
-    driver.stop()
+    
                     #driver.find_element_by_id("form:buscar").click()
                     #while not link:
                     #    try:
