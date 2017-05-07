@@ -163,7 +163,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                 for result in range(n_results):
                     #result +=1 
                     print("iteration number" + str(result))
-                    time.sleep(200)
+                    time.sleep(100)
                     #driver.implicitly_wait(160)
 
                     try: 
@@ -171,7 +171,7 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                     except:
                         driver.find_element_by_id('form:tblResultadoConsulta:{0}:j_idt53'.format(result)).click()
 
-                    driver.implicitly_wait(60)
+                    driver.implicitly_wait(20)
                     
                     cv_results = driver.find_element_by_id("form:tblResultado_data").find_elements_by_xpath("//tr[@data-ri]")
                     cv_n_results = int(len(cv_results))
@@ -187,9 +187,9 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                         signal.signal(signal.SIGALRM, timeout_handler)
 
                         try:
-                            signal.alarm(1200)  
+                            signal.alarm(1000)  
                             driver.find_element_by_id('form:tblResultado:{0}:idButtonConsultaAcuse'.format(cv)).click()
-                            driver.implicitly_wait(200)
+                            driver.implicitly_wait(.5)
 
                             cookies = {
                                 'JSESSIONID': driver.get_cookies()[1]["value"],
@@ -206,15 +206,15 @@ def Declaranet(funcionarios_list,s3c,raw_bucket,bucket):
                                 'Content-Type': 'charset=utf-8'
                             }
 
-                            sleep(randint(200,800)/100)
+                            time.sleep(randint(10,800)/100)
                             print("intentando decodificar")
                             cve = clean_name(cve)
                             target_file = bucket + '2017a' + "/"+ cve + ".pdf"
                             target_file = target_file
-                            time.sleep(200)
+                            time.sleep(.05)
                             fake_handle = StringIO(requests.get('http://servidorespublicos.gob.mx/consulta.pdf', headers=headers, cookies=cookies).content)
                             print(target_file)
-                            time.sleep(10)
+                            time.sleep(.05)
                             s3c.put_object(Bucket=raw_bucket, Key=target_file, Body=fake_handle.read())
 
                             time.sleep(5)
